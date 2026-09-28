@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: course-service
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 10m
+      key-prefix: "course-service::"
+      cache-null-values: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/course_db?createDatabaseIfNotExist=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DATABASE:0}
+      connect-timeout: 2s
+      timeout: 2s
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
